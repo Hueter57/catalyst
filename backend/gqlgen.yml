@@ -1,0 +1,40 @@
+# 自動生成コードの元となるGraphQLスキーマがどこに配置してあるか
+schema:
+  - ../schema/schema.graphqls
+  - ../schema/*.graphqls
+
+# 自動生成されるgeneated.goの置き場所
+exec:
+  filename: internal/graph/generated.go
+  package: graph
+
+# スキーマオブジェクトに対応するGo構造体の置き場所
+model:
+  filename: internal/graph/model/models_gen.go
+  package: model
+
+# リゾルバコードの置き場所
+resolver:
+  layout: follow-schema
+  dir: internal/resolver
+  package: resolver
+  filename_template: "{name}.resolvers.go"
+
+models:
+  ID:
+    model:
+      - github.com/99designs/gqlgen/graphql.ID
+      - github.com/99designs/gqlgen/graphql.Int
+      - github.com/99designs/gqlgen/graphql.Int64
+      - github.com/99designs/gqlgen/graphql.Int32
+  Int:
+    model:
+      - github.com/99designs/gqlgen/graphql.Int
+      - github.com/99designs/gqlgen/graphql.Int64
+      - github.com/99designs/gqlgen/graphql.Int32s
+  DateTime:
+    model:
+      - github.com/99designs/gqlgen/graphql.Time
+  URI:
+    model:
+      - github.com/hueter57/catalyst/backend/internal/graph/model.URI

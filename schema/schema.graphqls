@@ -1,0 +1,123 @@
+directive @isAuthenticated on FIELD_DEFINITION
+
+scalar Time
+  @specifiedBy(url: "https://scalars.graphql.org/andimarek/local-date")
+
+scalar URI @specifiedBy(url: "https://tools.ietf.org/html/rfc3986")
+
+enum TaskStatus {
+  IN_PROGRESS
+  COMPLETED
+  WAITING
+}
+
+enum Importance {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum TaskSortKey {
+  DUE_DATE
+  CREATED_AT
+  NEXT_REMINDER_AT
+}
+
+enum SortOrder {
+  ASC
+  DESC
+}
+
+type Task {
+  id: ID!
+  title: String!
+  description: String
+  status: TaskStatus!
+  importance: Importance!
+  dueDate: Time!
+  messageURL: URI
+  channelId: ID!
+  category: Category!
+  assignees: [User!]!
+  reminders: [Reminder!]!
+  createdAt: Time!
+  updatedAt: Time!
+}
+
+type Category {
+  id: ID!
+  name: String!
+}
+
+type User {
+  traqId: ID!
+  name: String!
+  icon: String
+}
+
+type Reminder {
+  id: ID!
+  remindAt: Time!
+}
+
+input CreateTaskInput {
+  title: String!
+  description: String
+  status: TaskStatus = IN_PROGRESS
+  importance: Importance!
+  dueDate: Time!
+  messageURL: URI
+  channelId: ID!
+  categoryId: ID!
+  assigneeIds: [ID!]!
+  reminderDates: [Time!]
+}
+
+input UpdateTaskInput {
+  id: ID!
+  title: String
+  description: String
+  status: TaskStatus
+  importance: Importance
+  dueDate: Time
+  messageURL: URI
+  channelId: ID
+  categoryId: ID
+  assigneeIds: [ID!]
+}
+
+input CreateCategoryInput {
+  name: String!
+}
+
+input UpdateCategoryInput {
+  id: ID!
+  name: String!
+}
+
+input TaskFilterInput {
+  status: [TaskStatus!]
+  importance: [Importance!]
+  assigneeIds: [ID!]
+  dueDateBefore: Time
+  dueDateAfter: Time
+}
+
+input TaskSortInput {
+  key: TaskSortKey!
+  order: SortOrder = DESC
+}
+
+type Query {
+  tasks(filter: TaskFilterInput, sortBy: TaskSortInput): [Task!]!
+  task(id: ID!): Task
+  categories: [Category!]!
+}
+
+type Mutation {
+  createTask(input: CreateTaskInput!): Task!
+  updateTask(input: UpdateTaskInput!): Task!
+  deleteTask(id: ID!): ID!
+  createCategory(input: CreateCategoryInput!): Category!
+  updateCategory(input: UpdateCategoryInput!): Category!
+}
