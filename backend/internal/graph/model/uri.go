@@ -8,9 +8,9 @@ import (
 	"github.com/99designs/gqlgen/graphql"
 )
 
-func MarshalURI(u url.URL) graphql.Marshaler {
+func MarshalURI(u url.URL) graphql.WriterFunc {
 	return graphql.WriterFunc(func(w io.Writer) {
-		io.WriteString(w, fmt.Sprintf(`"%s"`, u.String()))
+		_, _ = io.WriteString(w, fmt.Sprintf(`"%s"`, u.String()))
 	})
 }
 
