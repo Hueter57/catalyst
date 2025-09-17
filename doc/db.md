@@ -43,7 +43,7 @@
 | `task_id` | `BIGINT` | `FOREIGN KEY` (task.id) | どのタスクのリマインダーか |
 | `remind_at` | `DATETIME` | `NOT NULL` | リマインドを通知する日時 |
 
-### `task_assignee` テーブル
+### `assignee` テーブル
 
 タスクと担当者を紐付けるための中間テーブルです。これにより、タスクと担当者の「多対多」の関係を実現します。
 
