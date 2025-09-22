@@ -1,0 +1,45 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      MARIADB_USER: ${NS_MARIADB_USER:-root}
+      MARIADB_PASSWORD: ${NS_MARIADB_PASSWORD:-pass}
+      MARIADB_HOSTNAME: ${NS_MARIADB_HOSTNAME:-db}
+      MARIADB_PORT: ${NS_MARIADB_PORT:-3306}
+      MARIADB_DATABASE: ${NS_MARIADB_DATABASE:-app}
+      TZ: Asia/Tokyo
+    depends_on:
+      db:
+        condition: service_healthy
+    develop:
+      watch:
+        - action: rebuild
+          path: ./
+
+  db:
+    image: mariadb:10.11
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MARIADB_ROOT_PASSWORD: pass
+      MARIADB_DATABASE: app
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: mysql --user=root --password=pass --execute "SHOW DATABASES;"
+      interval: 1s
+      timeout: 10s
+      retries: 30
+
+  adminer:
+    image: adminer:latest
+    ports:
+      - "8081:8080"
+    depends_on:
+      db:
+        condition: service_healthy
