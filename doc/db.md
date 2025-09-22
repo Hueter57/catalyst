@@ -15,8 +15,8 @@
 | `id` | `BIGINT` | `PRIMARY KEY`, `AUTO_INCREMENT` | タスクの一意なID |
 | `title` | `VARCHAR(255)` | `NOT NULL` | タスク名 |
 | `description` | `TEXT` | `NULL` | タスクの詳細説明 |
-| `status` | `VARCHAR(32)` | `NOT NULL`, `DEFAULT 'in_progress'` | ステータス (`in_progress`, `completed`, `waiting`) |
-| `importance` | `VARCHAR(32)` | `NOT NULL` | 重要度 (`high`, `medium`, `low`) |
+| `status` | `Enum` | `NOT NULL`, `DEFAULT 'in_progress'` | ステータス (`in_progress`, `completed`, `waiting`) |
+| `importance` | `Enum` | `NOT NULL` | 重要度 (`high`, `medium`, `low`) |
 | `due_date` | `DATETIME` | `NOT NULL` | 期限日時 |
 | `message_id` | `VARCHAR(36)` | `NULL` | 関連traQメッセージID |
 | **`channel_id`** | **`VARCHAR(36)`** | **`NOT NULL`** | **通知先のtraQチャンネルUUID** |

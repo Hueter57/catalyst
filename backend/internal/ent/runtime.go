@@ -45,14 +45,6 @@ func init() {
 	taskDescTitle := taskFields[1].Descriptor()
 	// task.TitleValidator is a validator for the "title" field. It is called by the builders before save.
 	task.TitleValidator = taskDescTitle.Validators[0].(func(string) error)
-	// taskDescStatus is the schema descriptor for status field.
-	taskDescStatus := taskFields[3].Descriptor()
-	// task.DefaultStatus holds the default value on creation for the status field.
-	task.DefaultStatus = taskDescStatus.Default.(string)
-	// taskDescImportance is the schema descriptor for importance field.
-	taskDescImportance := taskFields[4].Descriptor()
-	// task.DefaultImportance holds the default value on creation for the importance field.
-	task.DefaultImportance = taskDescImportance.Default.(string)
 	// taskDescChannelID is the schema descriptor for channel_id field.
 	taskDescChannelID := taskFields[7].Descriptor()
 	// task.ChannelIDValidator is a validator for the "channel_id" field. It is called by the builders before save.

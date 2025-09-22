@@ -3,6 +3,7 @@
 package task
 
 import (
+	"fmt"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
@@ -95,10 +96,6 @@ func ValidColumn(column string) bool {
 var (
 	// TitleValidator is a validator for the "title" field. It is called by the builders before save.
 	TitleValidator func(string) error
-	// DefaultStatus holds the default value on creation for the "status" field.
-	DefaultStatus string
-	// DefaultImportance holds the default value on creation for the "importance" field.
-	DefaultImportance string
 	// ChannelIDValidator is a validator for the "channel_id" field. It is called by the builders before save.
 	ChannelIDValidator func(string) error
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
@@ -110,6 +107,60 @@ var (
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() uuid.UUID
 )
+
+// Status defines the type for the "status" enum field.
+type Status string
+
+// StatusInProgress is the default value of the Status enum.
+const DefaultStatus = StatusInProgress
+
+// Status values.
+const (
+	StatusInProgress Status = "in_progress"
+	StatusCompleted  Status = "completed"
+	StatusWaiting    Status = "waiting"
+)
+
+func (s Status) String() string {
+	return string(s)
+}
+
+// StatusValidator is a validator for the "status" field enum values. It is called by the builders before save.
+func StatusValidator(s Status) error {
+	switch s {
+	case StatusInProgress, StatusCompleted, StatusWaiting:
+		return nil
+	default:
+		return fmt.Errorf("task: invalid enum value for status field: %q", s)
+	}
+}
+
+// Importance defines the type for the "importance" enum field.
+type Importance string
+
+// ImportanceLow is the default value of the Importance enum.
+const DefaultImportance = ImportanceLow
+
+// Importance values.
+const (
+	ImportanceHigh   Importance = "high"
+	ImportanceMedium Importance = "medium"
+	ImportanceLow    Importance = "low"
+)
+
+func (i Importance) String() string {
+	return string(i)
+}
+
+// ImportanceValidator is a validator for the "importance" field enum values. It is called by the builders before save.
+func ImportanceValidator(i Importance) error {
+	switch i {
+	case ImportanceHigh, ImportanceMedium, ImportanceLow:
+		return nil
+	default:
+		return fmt.Errorf("task: invalid enum value for importance field: %q", i)
+	}
+}
 
 // OrderOption defines the ordering options for the Task queries.
 type OrderOption func(*sql.Selector)

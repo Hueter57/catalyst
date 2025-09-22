@@ -45,13 +45,13 @@ func (_c *TaskCreate) SetNillableDescription(v *string) *TaskCreate {
 }
 
 // SetStatus sets the "status" field.
-func (_c *TaskCreate) SetStatus(v string) *TaskCreate {
+func (_c *TaskCreate) SetStatus(v task.Status) *TaskCreate {
 	_c.mutation.SetStatus(v)
 	return _c
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (_c *TaskCreate) SetNillableStatus(v *string) *TaskCreate {
+func (_c *TaskCreate) SetNillableStatus(v *task.Status) *TaskCreate {
 	if v != nil {
 		_c.SetStatus(*v)
 	}
@@ -59,13 +59,13 @@ func (_c *TaskCreate) SetNillableStatus(v *string) *TaskCreate {
 }
 
 // SetImportance sets the "importance" field.
-func (_c *TaskCreate) SetImportance(v string) *TaskCreate {
+func (_c *TaskCreate) SetImportance(v task.Importance) *TaskCreate {
 	_c.mutation.SetImportance(v)
 	return _c
 }
 
 // SetNillableImportance sets the "importance" field if the given value is not nil.
-func (_c *TaskCreate) SetNillableImportance(v *string) *TaskCreate {
+func (_c *TaskCreate) SetNillableImportance(v *task.Importance) *TaskCreate {
 	if v != nil {
 		_c.SetImportance(*v)
 	}
@@ -263,8 +263,18 @@ func (_c *TaskCreate) check() error {
 	if _, ok := _c.mutation.Status(); !ok {
 		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "Task.status"`)}
 	}
+	if v, ok := _c.mutation.Status(); ok {
+		if err := task.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Task.status": %w`, err)}
+		}
+	}
 	if _, ok := _c.mutation.Importance(); !ok {
 		return &ValidationError{Name: "importance", err: errors.New(`ent: missing required field "Task.importance"`)}
+	}
+	if v, ok := _c.mutation.Importance(); ok {
+		if err := task.ImportanceValidator(v); err != nil {
+			return &ValidationError{Name: "importance", err: fmt.Errorf(`ent: validator failed for field "Task.importance": %w`, err)}
+		}
 	}
 	if _, ok := _c.mutation.DueDate(); !ok {
 		return &ValidationError{Name: "due_date", err: errors.New(`ent: missing required field "Task.due_date"`)}
@@ -327,11 +337,11 @@ func (_c *TaskCreate) createSpec() (*Task, *sqlgraph.CreateSpec) {
 		_node.Description = value
 	}
 	if value, ok := _c.mutation.Status(); ok {
-		_spec.SetField(task.FieldStatus, field.TypeString, value)
+		_spec.SetField(task.FieldStatus, field.TypeEnum, value)
 		_node.Status = value
 	}
 	if value, ok := _c.mutation.Importance(); ok {
-		_spec.SetField(task.FieldImportance, field.TypeString, value)
+		_spec.SetField(task.FieldImportance, field.TypeEnum, value)
 		_node.Importance = value
 	}
 	if value, ok := _c.mutation.DueDate(); ok {

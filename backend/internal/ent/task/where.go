@@ -66,16 +66,6 @@ func Description(v string) predicate.Task {
 	return predicate.Task(sql.FieldEQ(FieldDescription, v))
 }
 
-// Status applies equality check predicate on the "status" field. It's identical to StatusEQ.
-func Status(v string) predicate.Task {
-	return predicate.Task(sql.FieldEQ(FieldStatus, v))
-}
-
-// Importance applies equality check predicate on the "importance" field. It's identical to ImportanceEQ.
-func Importance(v string) predicate.Task {
-	return predicate.Task(sql.FieldEQ(FieldImportance, v))
-}
-
 // DueDate applies equality check predicate on the "due_date" field. It's identical to DueDateEQ.
 func DueDate(v time.Time) predicate.Task {
 	return predicate.Task(sql.FieldEQ(FieldDueDate, v))
@@ -242,133 +232,43 @@ func DescriptionContainsFold(v string) predicate.Task {
 }
 
 // StatusEQ applies the EQ predicate on the "status" field.
-func StatusEQ(v string) predicate.Task {
+func StatusEQ(v Status) predicate.Task {
 	return predicate.Task(sql.FieldEQ(FieldStatus, v))
 }
 
 // StatusNEQ applies the NEQ predicate on the "status" field.
-func StatusNEQ(v string) predicate.Task {
+func StatusNEQ(v Status) predicate.Task {
 	return predicate.Task(sql.FieldNEQ(FieldStatus, v))
 }
 
 // StatusIn applies the In predicate on the "status" field.
-func StatusIn(vs ...string) predicate.Task {
+func StatusIn(vs ...Status) predicate.Task {
 	return predicate.Task(sql.FieldIn(FieldStatus, vs...))
 }
 
 // StatusNotIn applies the NotIn predicate on the "status" field.
-func StatusNotIn(vs ...string) predicate.Task {
+func StatusNotIn(vs ...Status) predicate.Task {
 	return predicate.Task(sql.FieldNotIn(FieldStatus, vs...))
 }
 
-// StatusGT applies the GT predicate on the "status" field.
-func StatusGT(v string) predicate.Task {
-	return predicate.Task(sql.FieldGT(FieldStatus, v))
-}
-
-// StatusGTE applies the GTE predicate on the "status" field.
-func StatusGTE(v string) predicate.Task {
-	return predicate.Task(sql.FieldGTE(FieldStatus, v))
-}
-
-// StatusLT applies the LT predicate on the "status" field.
-func StatusLT(v string) predicate.Task {
-	return predicate.Task(sql.FieldLT(FieldStatus, v))
-}
-
-// StatusLTE applies the LTE predicate on the "status" field.
-func StatusLTE(v string) predicate.Task {
-	return predicate.Task(sql.FieldLTE(FieldStatus, v))
-}
-
-// StatusContains applies the Contains predicate on the "status" field.
-func StatusContains(v string) predicate.Task {
-	return predicate.Task(sql.FieldContains(FieldStatus, v))
-}
-
-// StatusHasPrefix applies the HasPrefix predicate on the "status" field.
-func StatusHasPrefix(v string) predicate.Task {
-	return predicate.Task(sql.FieldHasPrefix(FieldStatus, v))
-}
-
-// StatusHasSuffix applies the HasSuffix predicate on the "status" field.
-func StatusHasSuffix(v string) predicate.Task {
-	return predicate.Task(sql.FieldHasSuffix(FieldStatus, v))
-}
-
-// StatusEqualFold applies the EqualFold predicate on the "status" field.
-func StatusEqualFold(v string) predicate.Task {
-	return predicate.Task(sql.FieldEqualFold(FieldStatus, v))
-}
-
-// StatusContainsFold applies the ContainsFold predicate on the "status" field.
-func StatusContainsFold(v string) predicate.Task {
-	return predicate.Task(sql.FieldContainsFold(FieldStatus, v))
-}
-
 // ImportanceEQ applies the EQ predicate on the "importance" field.
-func ImportanceEQ(v string) predicate.Task {
+func ImportanceEQ(v Importance) predicate.Task {
 	return predicate.Task(sql.FieldEQ(FieldImportance, v))
 }
 
 // ImportanceNEQ applies the NEQ predicate on the "importance" field.
-func ImportanceNEQ(v string) predicate.Task {
+func ImportanceNEQ(v Importance) predicate.Task {
 	return predicate.Task(sql.FieldNEQ(FieldImportance, v))
 }
 
 // ImportanceIn applies the In predicate on the "importance" field.
-func ImportanceIn(vs ...string) predicate.Task {
+func ImportanceIn(vs ...Importance) predicate.Task {
 	return predicate.Task(sql.FieldIn(FieldImportance, vs...))
 }
 
 // ImportanceNotIn applies the NotIn predicate on the "importance" field.
-func ImportanceNotIn(vs ...string) predicate.Task {
+func ImportanceNotIn(vs ...Importance) predicate.Task {
 	return predicate.Task(sql.FieldNotIn(FieldImportance, vs...))
-}
-
-// ImportanceGT applies the GT predicate on the "importance" field.
-func ImportanceGT(v string) predicate.Task {
-	return predicate.Task(sql.FieldGT(FieldImportance, v))
-}
-
-// ImportanceGTE applies the GTE predicate on the "importance" field.
-func ImportanceGTE(v string) predicate.Task {
-	return predicate.Task(sql.FieldGTE(FieldImportance, v))
-}
-
-// ImportanceLT applies the LT predicate on the "importance" field.
-func ImportanceLT(v string) predicate.Task {
-	return predicate.Task(sql.FieldLT(FieldImportance, v))
-}
-
-// ImportanceLTE applies the LTE predicate on the "importance" field.
-func ImportanceLTE(v string) predicate.Task {
-	return predicate.Task(sql.FieldLTE(FieldImportance, v))
-}
-
-// ImportanceContains applies the Contains predicate on the "importance" field.
-func ImportanceContains(v string) predicate.Task {
-	return predicate.Task(sql.FieldContains(FieldImportance, v))
-}
-
-// ImportanceHasPrefix applies the HasPrefix predicate on the "importance" field.
-func ImportanceHasPrefix(v string) predicate.Task {
-	return predicate.Task(sql.FieldHasPrefix(FieldImportance, v))
-}
-
-// ImportanceHasSuffix applies the HasSuffix predicate on the "importance" field.
-func ImportanceHasSuffix(v string) predicate.Task {
-	return predicate.Task(sql.FieldHasSuffix(FieldImportance, v))
-}
-
-// ImportanceEqualFold applies the EqualFold predicate on the "importance" field.
-func ImportanceEqualFold(v string) predicate.Task {
-	return predicate.Task(sql.FieldEqualFold(FieldImportance, v))
-}
-
-// ImportanceContainsFold applies the ContainsFold predicate on the "importance" field.
-func ImportanceContainsFold(v string) predicate.Task {
-	return predicate.Task(sql.FieldContainsFold(FieldImportance, v))
 }
 
 // DueDateEQ applies the EQ predicate on the "due_date" field.

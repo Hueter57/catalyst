@@ -25,9 +25,9 @@ type Task struct {
 	// Description holds the value of the "description" field.
 	Description string `json:"description,omitempty"`
 	// Status holds the value of the "status" field.
-	Status string `json:"status,omitempty"`
+	Status task.Status `json:"status,omitempty"`
 	// Importance holds the value of the "importance" field.
-	Importance string `json:"importance,omitempty"`
+	Importance task.Importance `json:"importance,omitempty"`
 	// DueDate holds the value of the "due_date" field.
 	DueDate time.Time `json:"due_date,omitempty"`
 	// MessageID holds the value of the "message_id" field.
@@ -136,13 +136,13 @@ func (_m *Task) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
-				_m.Status = value.String
+				_m.Status = task.Status(value.String)
 			}
 		case task.FieldImportance:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field importance", values[i])
 			} else if value.Valid {
-				_m.Importance = value.String
+				_m.Importance = task.Importance(value.String)
 			}
 		case task.FieldDueDate:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -232,10 +232,10 @@ func (_m *Task) String() string {
 	builder.WriteString(_m.Description)
 	builder.WriteString(", ")
 	builder.WriteString("status=")
-	builder.WriteString(_m.Status)
+	builder.WriteString(fmt.Sprintf("%v", _m.Status))
 	builder.WriteString(", ")
 	builder.WriteString("importance=")
-	builder.WriteString(_m.Importance)
+	builder.WriteString(fmt.Sprintf("%v", _m.Importance))
 	builder.WriteString(", ")
 	builder.WriteString("due_date=")
 	builder.WriteString(_m.DueDate.Format(time.ANSIC))

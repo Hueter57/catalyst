@@ -23,9 +23,11 @@ func (Task) Fields() []ent.Field {
 			NotEmpty(),
 		field.Text("description").
 			Optional(),
-		field.String("status").
+		field.Enum("status").
+			Values("in_progress", "completed", "waiting").
 			Default("in_progress"),
-		field.String("importance").
+		field.Enum("importance").
+			Values("high", "medium", "low").
 			Default("low"),
 		field.Time("due_date"),
 		field.String("message_id").

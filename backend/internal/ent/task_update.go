@@ -67,13 +67,13 @@ func (_u *TaskUpdate) ClearDescription() *TaskUpdate {
 }
 
 // SetStatus sets the "status" field.
-func (_u *TaskUpdate) SetStatus(v string) *TaskUpdate {
+func (_u *TaskUpdate) SetStatus(v task.Status) *TaskUpdate {
 	_u.mutation.SetStatus(v)
 	return _u
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *TaskUpdate) SetNillableStatus(v *string) *TaskUpdate {
+func (_u *TaskUpdate) SetNillableStatus(v *task.Status) *TaskUpdate {
 	if v != nil {
 		_u.SetStatus(*v)
 	}
@@ -81,13 +81,13 @@ func (_u *TaskUpdate) SetNillableStatus(v *string) *TaskUpdate {
 }
 
 // SetImportance sets the "importance" field.
-func (_u *TaskUpdate) SetImportance(v string) *TaskUpdate {
+func (_u *TaskUpdate) SetImportance(v task.Importance) *TaskUpdate {
 	_u.mutation.SetImportance(v)
 	return _u
 }
 
 // SetNillableImportance sets the "importance" field if the given value is not nil.
-func (_u *TaskUpdate) SetNillableImportance(v *string) *TaskUpdate {
+func (_u *TaskUpdate) SetNillableImportance(v *task.Importance) *TaskUpdate {
 	if v != nil {
 		_u.SetImportance(*v)
 	}
@@ -296,6 +296,16 @@ func (_u *TaskUpdate) check() error {
 			return &ValidationError{Name: "title", err: fmt.Errorf(`ent: validator failed for field "Task.title": %w`, err)}
 		}
 	}
+	if v, ok := _u.mutation.Status(); ok {
+		if err := task.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Task.status": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.Importance(); ok {
+		if err := task.ImportanceValidator(v); err != nil {
+			return &ValidationError{Name: "importance", err: fmt.Errorf(`ent: validator failed for field "Task.importance": %w`, err)}
+		}
+	}
 	if v, ok := _u.mutation.ChannelID(); ok {
 		if err := task.ChannelIDValidator(v); err != nil {
 			return &ValidationError{Name: "channel_id", err: fmt.Errorf(`ent: validator failed for field "Task.channel_id": %w`, err)}
@@ -326,10 +336,10 @@ func (_u *TaskUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(task.FieldDescription, field.TypeString)
 	}
 	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(task.FieldStatus, field.TypeString, value)
+		_spec.SetField(task.FieldStatus, field.TypeEnum, value)
 	}
 	if value, ok := _u.mutation.Importance(); ok {
-		_spec.SetField(task.FieldImportance, field.TypeString, value)
+		_spec.SetField(task.FieldImportance, field.TypeEnum, value)
 	}
 	if value, ok := _u.mutation.DueDate(); ok {
 		_spec.SetField(task.FieldDueDate, field.TypeTime, value)
@@ -507,13 +517,13 @@ func (_u *TaskUpdateOne) ClearDescription() *TaskUpdateOne {
 }
 
 // SetStatus sets the "status" field.
-func (_u *TaskUpdateOne) SetStatus(v string) *TaskUpdateOne {
+func (_u *TaskUpdateOne) SetStatus(v task.Status) *TaskUpdateOne {
 	_u.mutation.SetStatus(v)
 	return _u
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *TaskUpdateOne) SetNillableStatus(v *string) *TaskUpdateOne {
+func (_u *TaskUpdateOne) SetNillableStatus(v *task.Status) *TaskUpdateOne {
 	if v != nil {
 		_u.SetStatus(*v)
 	}
@@ -521,13 +531,13 @@ func (_u *TaskUpdateOne) SetNillableStatus(v *string) *TaskUpdateOne {
 }
 
 // SetImportance sets the "importance" field.
-func (_u *TaskUpdateOne) SetImportance(v string) *TaskUpdateOne {
+func (_u *TaskUpdateOne) SetImportance(v task.Importance) *TaskUpdateOne {
 	_u.mutation.SetImportance(v)
 	return _u
 }
 
 // SetNillableImportance sets the "importance" field if the given value is not nil.
-func (_u *TaskUpdateOne) SetNillableImportance(v *string) *TaskUpdateOne {
+func (_u *TaskUpdateOne) SetNillableImportance(v *task.Importance) *TaskUpdateOne {
 	if v != nil {
 		_u.SetImportance(*v)
 	}
@@ -749,6 +759,16 @@ func (_u *TaskUpdateOne) check() error {
 			return &ValidationError{Name: "title", err: fmt.Errorf(`ent: validator failed for field "Task.title": %w`, err)}
 		}
 	}
+	if v, ok := _u.mutation.Status(); ok {
+		if err := task.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Task.status": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.Importance(); ok {
+		if err := task.ImportanceValidator(v); err != nil {
+			return &ValidationError{Name: "importance", err: fmt.Errorf(`ent: validator failed for field "Task.importance": %w`, err)}
+		}
+	}
 	if v, ok := _u.mutation.ChannelID(); ok {
 		if err := task.ChannelIDValidator(v); err != nil {
 			return &ValidationError{Name: "channel_id", err: fmt.Errorf(`ent: validator failed for field "Task.channel_id": %w`, err)}
@@ -796,10 +816,10 @@ func (_u *TaskUpdateOne) sqlSave(ctx context.Context) (_node *Task, err error) {
 		_spec.ClearField(task.FieldDescription, field.TypeString)
 	}
 	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(task.FieldStatus, field.TypeString, value)
+		_spec.SetField(task.FieldStatus, field.TypeEnum, value)
 	}
 	if value, ok := _u.mutation.Importance(); ok {
-		_spec.SetField(task.FieldImportance, field.TypeString, value)
+		_spec.SetField(task.FieldImportance, field.TypeEnum, value)
 	}
 	if value, ok := _u.mutation.DueDate(); ok {
 		_spec.SetField(task.FieldDueDate, field.TypeTime, value)

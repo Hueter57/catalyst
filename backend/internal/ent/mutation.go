@@ -1265,8 +1265,8 @@ type TaskMutation struct {
 	id              *uuid.UUID
 	title           *string
 	description     *string
-	status          *string
-	importance      *string
+	status          *task.Status
+	importance      *task.Importance
 	due_date        *time.Time
 	message_id      *string
 	channel_id      *string
@@ -1475,12 +1475,12 @@ func (m *TaskMutation) ResetDescription() {
 }
 
 // SetStatus sets the "status" field.
-func (m *TaskMutation) SetStatus(s string) {
-	m.status = &s
+func (m *TaskMutation) SetStatus(t task.Status) {
+	m.status = &t
 }
 
 // Status returns the value of the "status" field in the mutation.
-func (m *TaskMutation) Status() (r string, exists bool) {
+func (m *TaskMutation) Status() (r task.Status, exists bool) {
 	v := m.status
 	if v == nil {
 		return
@@ -1491,7 +1491,7 @@ func (m *TaskMutation) Status() (r string, exists bool) {
 // OldStatus returns the old "status" field's value of the Task entity.
 // If the Task object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *TaskMutation) OldStatus(ctx context.Context) (v string, err error) {
+func (m *TaskMutation) OldStatus(ctx context.Context) (v task.Status, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldStatus is only allowed on UpdateOne operations")
 	}
@@ -1511,12 +1511,12 @@ func (m *TaskMutation) ResetStatus() {
 }
 
 // SetImportance sets the "importance" field.
-func (m *TaskMutation) SetImportance(s string) {
-	m.importance = &s
+func (m *TaskMutation) SetImportance(t task.Importance) {
+	m.importance = &t
 }
 
 // Importance returns the value of the "importance" field in the mutation.
-func (m *TaskMutation) Importance() (r string, exists bool) {
+func (m *TaskMutation) Importance() (r task.Importance, exists bool) {
 	v := m.importance
 	if v == nil {
 		return
@@ -1527,7 +1527,7 @@ func (m *TaskMutation) Importance() (r string, exists bool) {
 // OldImportance returns the old "importance" field's value of the Task entity.
 // If the Task object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *TaskMutation) OldImportance(ctx context.Context) (v string, err error) {
+func (m *TaskMutation) OldImportance(ctx context.Context) (v task.Importance, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldImportance is only allowed on UpdateOne operations")
 	}
@@ -2010,14 +2010,14 @@ func (m *TaskMutation) SetField(name string, value ent.Value) error {
 		m.SetDescription(v)
 		return nil
 	case task.FieldStatus:
-		v, ok := value.(string)
+		v, ok := value.(task.Status)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetStatus(v)
 		return nil
 	case task.FieldImportance:
-		v, ok := value.(string)
+		v, ok := value.(task.Importance)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
