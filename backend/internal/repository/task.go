@@ -7,7 +7,7 @@ func (r *Repository) GetTaskByID(id string) (*model.Task, error) {
 	return nil, nil
 }
 
-func (r *Repository) GetTasksByFilter(filter *model.TaskFilterInput) ([]*model.Task, error) {
+func (r *Repository) GetTasksByFilter(filter *model.TaskFilterInput, sortBy model.TaskSortInput) ([]*model.Task, error) {
 	// TODO: implement
 	return nil, nil
 }
