@@ -5,6 +5,9 @@ type Service struct {
 }
 
 type Repository interface {
+	TaskRepository
+	CategoryRepository
+	UserRepository
 }
 
 func New(r Repository) *Service {
